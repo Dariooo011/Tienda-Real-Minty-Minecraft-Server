@@ -1,0 +1,130 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Encabezado y pie de página */
+header, footer {
+    text-align: center;
+    padding: 1em;
+    background-color: #1f1f1f;
+    border-bottom: 1px solid #333;
+}
+
+header h1 {
+    font-size: 2em;
+    color: #00e676; /* Verde neón */
+}
+
+/* Perfil */
+#perfil {
+    font-size: 1.2em;
+    color: #00bfa5; /* Verde azulado */
+    margin-top: 10px;
+}
+
+/* Contenedor de rangos */
+#rango-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+}
+
+.rango {
+    border: 2px solid #555;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    width: 180px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
+}
+
+.rango:hover {
+    background-color: #292929;
+    border-color: #00e676;
+    box-shadow: 0 0 25px rgba(0, 230, 118, 0.6);
+}
+
+/* Estilo del carrito */
+#carrito {
+    margin: 20px auto;
+    background-color: #222;
+    padding: 30px;
+    width: 60%;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 191, 165, 0.3);
+}
+
+#carrito h2 {
+    font-size: 1.8em;
+    color: #00bfa5;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#lista-carrito {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+#lista-carrito li {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    color: #e0e0e0;
+}
+
+label {
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    margin: 0 10px;
+    background-color: #333;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #00e676;
+    color: #121212;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #00c853;
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+}
+
+/* Pie de página */
+footer p {
+    margin: 0.5em 0;
+    color: #888;
+}
+
+footer p:first-of-type {
+    font-weight: bold;
+    color: #00bfa5;
+}
