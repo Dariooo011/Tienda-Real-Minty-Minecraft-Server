@@ -3,41 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Real-Minty</title>
+    <title>Tienda de Rangos - Real-Minty</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Bienvenido a la tienda de Real-Minty</h1>
-        <div id="perfil">
-            <span id="nombre-jugador"></span>
-            <span id="saldo"></span>
-        </div>
-    </header>
+    <!-- Formulario de entrada para obtener el perfil del jugador -->
+    <div id="entrada">
+        <h1>Bienvenido a Real-Minty</h1>
+        <p>Ingresa tu nombre de Minecraft y el saldo en Nautic (máx. 4000000):</p>
+        <input type="text" id="nombreMC" placeholder="Nombre de Minecraft">
+        <input type="number" id="saldo" placeholder="Saldo en Nautic" max="4000000">
+        <button onclick="iniciar()">Entrar</button>
+    </div>
 
-    <main>
-        <section id="rango-container">
-            <div class="rango" data-precio="750000" data-nombre="Minty">Minty - 750000€/$</div>
-            <div class="rango" data-precio="550000" data-nombre="Atlas">Atlas - 550000€/$</div>
-            <div class="rango" data-precio="400000" data-nombre="Artificial">Artificial - 400000€/$</div>
-            <div class="rango" data-precio="200000" data-nombre="Humanoide">Humanoide - 200000€/$</div>
-            <div class="rango" data-precio="100000" data-nombre="Robot">Robot - 100000€/$</div>
+    <!-- Tienda -->
+    <div id="tienda" style="display:none;">
+        <header>
+            <h2>Bienvenido <span id="nombreUsuario"></span></h2>
+            <h3>Saldo disponible: €<span id="saldoDisponible"></span></h3>
+        </header>
+
+        <section id="productos">
+            <h2>Rangos Disponibles</h2>
+            <div class="producto">
+                <h3>Minty</h3>
+                <p>Precio: €750,000</p>
+                <button onclick="agregarCarrito('Minty', 750000)">Agregar al Carrito</button>
+            </div>
+            <div class="producto">
+                <h3>Atlas</h3>
+                <p>Precio: €550,000</p>
+                <button onclick="agregarCarrito('Atlas', 550000)">Agregar al Carrito</button>
+            </div>
+            <div class="producto">
+                <h3>Artificial</h3>
+                <p>Precio: €400,000</p>
+                <button onclick="agregarCarrito('Artificial', 400000)">Agregar al Carrito</button>
+            </div>
+            <div class="producto">
+                <h3>Humanoide</h3>
+                <p>Precio: €200,000</p>
+                <button onclick="agregarCarrito('Humanoide', 200000)">Agregar al Carrito</button>
+            </div>
+            <div class="producto">
+                <h3>Robot</h3>
+                <p>Precio: €100,000</p>
+                <button onclick="agregarCarrito('Robot', 100000)">Agregar al Carrito</button>
+            </div>
         </section>
-        
+
+        <!-- Carrito -->
         <section id="carrito">
             <h2>Carrito de Compras</h2>
-            <ul id="lista-carrito"></ul>
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" min="1" max="10" value="1">
-            <button onclick="confirmarCompra()">Comprar Rango</button>
+            <div id="itemsCarrito"></div>
+            <button onclick="comprar()">Comprar</button>
         </section>
-    </main>
 
-    <footer>
-        <p>Cualquier duda, abran ticket en nuestro servidor de Discord</p>
-        <p>Creado por el equipo de Real-Minty</p>
-        <p>Todos los pagos serán a través de Nautic MC.</p>
-    </footer>
+        <footer>
+            <p>Cualquier duda abran ticket en nuestro servidor de Discord</p>
+            <p>Creado por el equipo de Real-Minty</p>
+            <p>Todos los pagos se realizan en Nautic MC</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
