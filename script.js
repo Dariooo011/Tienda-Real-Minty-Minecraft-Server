@@ -1,54 +1,59 @@
-let saldo = 0;
+// script.js
+
 let carrito = [];
-const saldoDisplay = document.getElementById('saldo');
-const nombreJugadorDisplay = document.getElementById('nombre-jugador');
-const listaCarrito = document.getElementById('lista-carrito');
+let saldoDisponible = 0;
 
-window.onload = function() {
-    const nombre = prompt("¿Cuál es tu nombre de Minecraft?");
-    saldo = parseFloat(prompt("¿Cuánto dinero tienes en Nautic?"));
-    nombreJugadorDisplay.innerText = `Jugador: ${nombre}`;
-    actualizarSaldo();
-};
+function iniciar() {
+    const nombre = document.getElementById("nombreMC").value;
+    saldoDisponible = parseInt(document.getElementById("saldo").value);
 
-document.querySelectorAll('.rango').forEach(item => {
-    item.addEventListener('click', () => {
-        const nombre = item.dataset.nombre;
-        const precio = parseFloat(item.dataset.precio);
-        const cantidad = parseInt(document.getElementById('cantidad').value);
-        agregarAlCarrito(nombre, precio, cantidad);
-    });
-});
+    if (nombre && saldoDisponible > 0 && saldoDisponible <= 4000000) {
+        localStorage.setItem("nombre", nombre);
+        localStorage.setItem("saldo", saldoDisponible);
 
-function agregarAlCarrito(nombre, precio, cantidad) {
-    carrito.push({ nombre, precio, cantidad });
-    actualizarCarrito();
+        document.getElementById("nombreUsuario").textContent = nombre;
+        document.getElementById("saldoDisponible").textContent = saldoDisponible;
+
+        document.getElementById("entrada").style.display = "none";
+        document.getElementById("tienda").style.display = "block";
+    } else {
+        alert("Por favor, ingrese un nombre válido y un saldo entre 1 y 4000000.");
+    }
+}
+
+function agregarCarrito(nombreProducto, precio) {
+    if (saldoDisponible < precio) {
+        alert("No tienes suficiente saldo para este producto.");
+        return;
+    }
+
+    if (confirm("¿Estás seguro/a de que quieres comprar este artículo?")) {
+        carrito.push({ nombre: nombreProducto, precio: precio });
+        actualizarCarrito();
+    }
 }
 
 function actualizarCarrito() {
-    listaCarrito.innerHTML = '';
+    const itemsCarrito = document.getElementById("itemsCarrito");
+    itemsCarrito.innerHTML = "";
+
     carrito.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.innerText = `${item.cantidad}x ${item.nombre} - ${item.precio * item.cantidad} €/$`;
-        listaCarrito.appendChild(li);
+        itemsCarrito.innerHTML += `<p>${item.nombre} - €${item.precio}</p>`;
     });
 }
 
-function actualizarSaldo() {
-    saldoDisplay.innerText = `Saldo: ${saldo.toFixed(2)} €/$`;
-}
+function comprar() {
+    const totalCompra = carrito.reduce((total, item) => total + item.precio, 0);
 
-function confirmarCompra() {
-    if (carrito.length === 0) return alert("El carrito está vacío.");
-
-    const total = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
-    if (total > saldo) return alert("No tienes suficiente saldo.");
-
-    if (confirm("¿Estás seguro/a de que quieres comprar estos artículos?")) {
-        saldo -= total;
-        carrito = [];
-        actualizarCarrito();
-        actualizarSaldo();
-        alert("¡Compra realizada con éxito!");
+    if (totalCompra > saldoDisponible) {
+        alert("No tienes suficiente saldo para completar la compra.");
+        return;
     }
+
+    saldoDisponible -= totalCompra;
+    carrito = [];
+
+    document.getElementById("saldoDisponible").textContent = saldoDisponible;
+    actualizarCarrito();
+    alert("Compra realizada con éxito.");
 }
