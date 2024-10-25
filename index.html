@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Real-Minty</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a la tienda de Real-Minty</h1>
+        <div id="perfil">
+            <span id="nombre-jugador"></span>
+            <span id="saldo"></span>
+        </div>
+    </header>
 
+    <main>
+        <section id="rango-container">
+            <div class="rango" data-precio="750000" data-nombre="Minty">Minty - 750000€/$</div>
+            <div class="rango" data-precio="550000" data-nombre="Atlas">Atlas - 550000€/$</div>
+            <div class="rango" data-precio="400000" data-nombre="Artificial">Artificial - 400000€/$</div>
+            <div class="rango" data-precio="200000" data-nombre="Humanoide">Humanoide - 200000€/$</div>
+            <div class="rango" data-precio="100000" data-nombre="Robot">Robot - 100000€/$</div>
+        </section>
+        
+        <section id="carrito">
+            <h2>Carrito de Compras</h2>
+            <ul id="lista-carrito"></ul>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" min="1" max="10" value="1">
+            <button onclick="confirmarCompra()">Comprar Rango</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>Cualquier duda, abran ticket en nuestro servidor de Discord</p>
+        <p>Creado por el equipo de Real-Minty</p>
+        <p>Todos los pagos serán a través de Nautic MC.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
