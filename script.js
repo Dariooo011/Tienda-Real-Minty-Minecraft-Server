@@ -2,6 +2,7 @@
 
 let carrito = [];
 let saldoDisponible = 0;
+const webhookURL = "TU_WEBHOOK_URL_DE_DISCORD";  // Reemplaza con tu URL de Webhook
 
 function iniciar() {
     const nombre = document.getElementById("nombreMC").value;
@@ -56,4 +57,33 @@ function comprar() {
     document.getElementById("saldoDisponible").textContent = saldoDisponible;
     actualizarCarrito();
     alert("Compra realizada con éxito.");
+
+    // Llamada al webhook de Discord
+    enviarNotificacionDiscord(totalCompra);
+}
+
+// Función para enviar la notificación de Discord
+function enviarNotificacionDiscord(totalCompra) {
+    const nombre = localStorage.getItem("nombre");
+    const mensaje = {
+        content: `¡Nueva compra realizada! \nUsuario: ${nombre} \nTotal: €${totalCompra}`
+    };
+
+    fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(mensaje)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Notificación enviada a Discord");
+        } else {
+            console.error("Error al enviar la notificación a Discord");
+        }
+    })
+    .catch(error => {
+        console.error("Error en el webhook de Discord:", error);
+    });
 }
