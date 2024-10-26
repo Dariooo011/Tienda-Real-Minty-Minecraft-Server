@@ -1,0 +1,7 @@
+[
+  { "nombre": "Minty", "precio": 750000 },
+  { "nombre": "Atlas", "precio": 550000 },
+  { "nombre": "Artificial", "precio": 400000 },
+  { "nombre": "Humanoide", "precio": 200000 },
+  { "nombre": "Robot", "precio": 100000 }
+]

@@ -1,69 +1,73 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de Rangos - Real-Minty</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Real-Minty Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'mint': '#98ff98',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <!-- Formulario de entrada para obtener el perfil del jugador -->
-    <div id="entrada">
-        <h1>Bienvenido a Real-Minty</h1>
-        <p>Ingresa tu nombre de Minecraft y el saldo en Nautic (máx. 4000000):</p>
-        <input type="text" id="nombreMC" placeholder="Nombre de Minecraft">
-        <input type="number" id="saldo" placeholder="Saldo en Nautic" max="4000000">
-        <button onclick="iniciar()">Entrar</button>
-    </div>
-
-    <!-- Tienda -->
-    <div id="tienda" style="display:none;">
-        <header>
-            <h2>Bienvenido <span id="nombreUsuario"></span></h2>
-            <h3>Saldo disponible: €<span id="saldoDisponible"></span></h3>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header id="userHeader" class="hidden mb-8 p-4 bg-gray-800 rounded-lg shadow-lg">
+            <div class="flex justify-between items-center">
+                <h2 id="userName" class="text-2xl font-bold text-mint"></h2>
+                <div id="userBalance" class="text-xl font-semibold"></div>
+            </div>
         </header>
 
-        <section id="productos">
-            <h2>Rangos Disponibles</h2>
-            <div class="producto">
-                <h3>Minty</h3>
-                <p>Precio: €750,000</p>
-                <button onclick="agregarCarrito('Minty', 750000)">Agregar al Carrito</button>
-            </div>
-            <div class="producto">
-                <h3>Atlas</h3>
-                <p>Precio: €550,000</p>
-                <button onclick="agregarCarrito('Atlas', 550000)">Agregar al Carrito</button>
-            </div>
-            <div class="producto">
-                <h3>Artificial</h3>
-                <p>Precio: €400,000</p>
-                <button onclick="agregarCarrito('Artificial', 400000)">Agregar al Carrito</button>
-            </div>
-            <div class="producto">
-                <h3>Humanoide</h3>
-                <p>Precio: €200,000</p>
-                <button onclick="agregarCarrito('Humanoide', 200000)">Agregar al Carrito</button>
-            </div>
-            <div class="producto">
-                <h3>Robot</h3>
-                <p>Precio: €100,000</p>
-                <button onclick="agregarCarrito('Robot', 100000)">Agregar al Carrito</button>
-            </div>
-        </section>
+        <h1 class="text-5xl font-bold text-center mb-12 text-mint">Real-Minty Store</h1>
+        
+        <div id="userForm" class="mb-12 max-w-md mx-auto">
+            <h2 class="text-3xl font-semibold mb-6 text-center">Welcome, Nautic!</h2>
+            <form id="nauticForm" class="space-y-6 bg-gray-800 p-6 rounded-lg shadow-lg">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-300">Your Name:</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-mint focus:ring focus:ring-mint focus:ring-opacity-50">
+                </div>
+                <div>
+                    <label for="balance" class="block text-sm font-medium text-gray-300">Your Balance (max 4M):</label>
+                    <input type="number" id="balance" name="balance" required min="0" max="4000000" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-mint focus:ring focus:ring-mint focus:ring-opacity-50">
+                </div>
+                <button type="submit" class="w-full bg-mint hover:bg-green-400 text-gray-900 font-bold py-3 px-4 rounded-lg transition duration-300">
+                    Start Shopping
+                </button>
+            </form>
+        </div>
 
-        <!-- Carrito -->
-        <section id="carrito">
-            <h2>Carrito de Compras</h2>
-            <div id="itemsCarrito"></div>
-            <button onclick="comprar()">Comprar</button>
-        </section>
+        <div id="store" class="hidden">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Available Products</h2>
+            <div id="productList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
 
-        <footer>
-            <p>Cualquier duda abran ticket en nuestro servidor de Discord</p>
-            <p>Creado por el equipo de Real-Minty</p>
-            <p>Todos los pagos se realizan en Nautic MC</p>
+        <div id="purchaseResult" class="mt-12 text-center hidden p-4 bg-gray-800 rounded-lg"></div>
+
+        <footer class="mt-16 text-center text-sm text-gray-400">
+            Made by the Real-Minty team with help from VKTEAM
         </footer>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h3 class="text-2xl font-bold mb-4 text-mint">Confirm Purchase</h3>
+            <p id="confirmationMessage" class="mb-6 text-gray-300"></p>
+            <div class="flex justify-end space-x-4">
+                <button id="cancelPurchase" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-300">Cancel</button>
+                <button id="confirmPurchase" class="px-4 py-2 bg-mint text-gray-900 rounded hover:bg-green-400 transition duration-300">Confirm</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
